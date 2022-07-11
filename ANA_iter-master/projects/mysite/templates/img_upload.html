@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <title>ANA</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/img_upload.css' %}">
+    <script src="{% static 'camera_item.js' %}"></script>
+    <style>
+        .intro_bg{
+            background-image: url( "{% static 'image/intro2.jpg' %}");
+        }
+    </style>
+    <script type="text/javascript">
+           $(document).ready(function(){
+                $(".page-link").on('click', function() {
+                    $("#page").val($(this).data("page"));
+                    $("#searchForm").submit();
+                });
+            
+                $("#btn_search").on('click', function() {
+                    $("#kw").val($(".kw").val());
+                    $("#page").val(1);  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+                    $("#searchForm").submit();
+                });
+            });
+    </script>
+</head>
+    
+<body>
+    <div class="wrap">
+        <div class="intro_bg">
+             <div class="header" id="link_header">
+                <ul class="nav">
+                    <li><a class="nav-link_iter" href="{% url 'mainpage:index' %}">ANA</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a class="nav-link_iter" href="{% url 'common:logout' %}">{{ user.username }} (로그아웃)</a></li>
+                    {% else %}
+                    <li><a class="nav-link_iter" href="{% url 'common:login' %}">로그인</a></li>
+                    {% endif %}
+                </ul>
+                <div class="searchArea">
+                    <form>
+                        <input type="search" placeholder="Search" class="form-control kw" value="{{ kw|default_if_none:'' }}">
+                        <span class="btn1_iter" type="button" id="btn_search">검색</span>
+                    </form>
+                </div>
+        </div>
+        <div class="table_main0">
+            <div class="table_main1">
+                <span class="title_h1">이미지 업로드</span>               
+                <form method="POST" action="/profile-upload-single" enctype="multipart/form-data">
+                    <div class="main_text0">
+                        <div class="img_iter" id="thumbnailImgs"></div>
+                        <div class="title">
+                            <input type="file" id="upImgFiles" onChange="uploadImgPreview();" accept="image/*" multiple>
+                        </div>
+                    <div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <form id="searchForm" method="get" action="{% url 'index' %}">
+        <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+        <input type="hidden" id="page" name="page" value="{{ page }}">
+    </form>
+</body>
+</html>

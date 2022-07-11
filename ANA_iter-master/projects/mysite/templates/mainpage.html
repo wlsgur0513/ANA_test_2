@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mainpage.css' %}">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <title>Sunrin_iter</title>
+    <script type="text/javascript">
+    </script>
+    <style>
+        .intro_bg{
+            background-image: url( "{% static 'image/배경.jpg' %}");
+        }
+        input[id="menuicon"] {display:none;}
+        input[id="menuicon"] + label {display:block;width:44px;height:24px;position:relative;cursor:pointer;}
+        input[id="menuicon"] + label span {display:block;position:absolute;width:100%;height:5px;border-radius:30px;background:#000;transition:all .35s;}
+        input[id="menuicon"] + label span:nth-child(1) {top:0;}
+        input[id="menuicon"] + label span:nth-child(2) {top:50%;transform:translateY(-50%);}
+        input[id="menuicon"] + label span:nth-child(3) {bottom:0;}
+        input[id="menuicon"]:checked + label {z-index:2;}
+        input[id="menuicon"]:checked + label span {background:#fff;}
+        input[id="menuicon"]:checked + label span:nth-child(1) {top:50%;transform:translateY(-50%) rotate(45deg);}
+        input[id="menuicon"]:checked + label span:nth-child(2) {opacity:0;}
+        input[id="menuicon"]:checked + label span:nth-child(3) {bottom:50%;transform:translateY(50%) rotate(-45deg);}
+        div[class="sidebar"] {width:300px;height:100%;background:#222;position:fixed;top:0;left:-300px;z-index:1;transition:all .35s;border-radius: 0px 5px 5px 0px;}
+        input[id="menuicon"]:checked + label + div {left:0;}
+        .center {
+            position:relative;
+            width: 100px;
+            height: 100px;
+            top: -60px;
+            left: 25px;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Black+Han+Sans&family=Dongle&family=Edu+TAS+Beginner&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+</head>
+<body style="overflow-x: hidden">
+        <div class="wrap">
+            <div class="intro_bg">
+                <div class="header" id="link_header"></div>
+                <div class="center">
+                    <input type="checkbox" id="menuicon">
+                    <label for="menuicon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                    <div class="sidebar">
+                        <ul class="nav1">
+                            <li><a href="{% url 'pybo:index' %}">질문 게시판</a></li>
+                            <li><a href="#link_main_text1">채팅방</a></li>
+                            <li><a href="{% url 'mainpage:upload' %}">이미지 업로드</a></li>
+                            {% if user.is_authenticated %}
+                            <li><a class="nav-link_iter" href="{% url 'common:logout' %}">{{ user.username }} (로그아웃)</a></li>
+                            {% else %}
+                            <li><a class="nav-link_iter" href="{% url 'common:login' %}">로그인</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="intro_portfolio">
+                    <h1>Portfolio</h1>
+                    <ul class="box">
+                        <div onclick="location.href='{% url 'page:page' %}'">
+                        <li>
+                            Planning
+                        </li>
+                        </div>
+                        <div onclick="location.href=''">
+                        <li>
+                            Development
+                        </li>
+                        </div>
+                        <div onclick="location.href=''">
+                        <li>
+                            Sources
+                        </li>
+                        </div>
+                    </ul>
+                </div>
+                <div class="img_color">
+                    <div class="intro_text">
+                        <h1>Iter</h1>
+                        <h4>개인 포트폴리오에 오신 것을 환영합니다!</h4>                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="main_text0" id="link_main_text0">
+                <h1>Project</h1>
+                <div class="contents1">다양하고 새로운 기능과 웹사이트를 만나보실 수 있습니다.</div>
+                
+                <ul class="icons">
+                    <li>
+                        <div class="icon_img" onclick="location.href='{% url 'pybo:index' %}'">
+                            <img src="{% static 'image/board.png' %}" width="109.4px" height="109.4px">
+                        </div>
+                        <div class="contents1_bold">게시판</div>
+                        <div class="contents2">
+                            사용자가 다양한 질문을 검색할 수 있습니다.
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon_img" onclick="location.href='http://127.0.0.1:3000/'">
+                            <img src="{% static 'image/speak.png' %}" width="109.4px" height="109.4px">
+                        </div>
+                        <div class="contents1_bold">채팅방</div>
+                        <div class="contents2">
+                            사용자가 다른 사용자와 채팅을 할 수 있습니다.
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon_img" onclick="location.href='https://github.com/wlsgur0513'">
+                            <img src="{% static 'image/github-logo1.png' %}" width="109.4px" height="109.4px">
+                        </div>
+                        <div class="contents1_bold">github</div>
+                        <div class="contents2">
+                            각 프로젝트의 코드를 방문할 수 있습니다.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--
+            <div class="main_text1">
+                <h1>목차</h1>
+                <div class="contents1">개인 포트폴리오</div>
+                <ul class="box2">
+                    <li>
+
+                    </li>
+                    <li>
+
+                    </li>
+                    <li>
+                        
+                    </li>
+                </ul>
+            </div>
+            -->
+            <div class="main_text2">
+                <div class="header">
+                    <ul class="nav">
+                        <li><a href="">Sunrin</a></li>
+                        <li><a href="https://www.google.co.kr/?safe=active&ssui=on">Google</a></li>
+                        <li><a href="https://www.youtube.com/">Youtube</a></li>
+                    </ul>
+                </div>
+                <br>
+                <br>
+                <hr>
+                <span>© 2022. Iter all rightss reserved.</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
